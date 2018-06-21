@@ -1,5 +1,4 @@
 FROM casualjim/scratch
-MAINTAINER Ivan Porto Carrero <ivan@flanders.co.nz>
 
 # extract executable to root
 ADD ./caddy.tar.gz /
