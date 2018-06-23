@@ -2,13 +2,14 @@
 
 set -e -o pipefail
 
-github::download::url() { 
-  curl -s https://api.github.com/repos/$1/$2/releases/latest | jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url' 
+osv=$(uname)
+github::download::url() {
+  curl -s https://api.github.com/repos/$1/$2/releases/latest | jq -r '.assets[] | select(.name | contains("'"${osv,,}"'_amd64")) | .browser_download_url'
 }
 
 github::download::latest() {
   [ -f ./caddy.tar.gz ] && rm ./caddy.tar.gz
-  
+
   curl -o ./caddy.tar.gz -L'#' $(github::download::url mholt caddy)
 }
 
